@@ -1,13 +1,17 @@
 import Inbox from "@/components/Inbox";
 import Share from "@/components/Share";
 import { Skeleton } from "@/components/ui/skeleton";
-import { auth } from "@clerk/nextjs/server";
+import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { Suspense } from "react";
 
 const Page = async () => {
-  const { userId } = await auth();
-  if (!userId) redirect("/");
+  const supabase = await createClient();
+  const { data : {user}, error } = await supabase.auth.getUser();
+
+  if (!error || !user) redirect("/");
+  const userId = user.id;
+
   return (
     <>
       <Suspense fallback={<Skeleton className="w-full my-2 h-20" />}>

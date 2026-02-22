@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import { UserButton } from "@clerk/nextjs";
 import { ThemeToggle } from "./ThemeToggle";
+import { UserButton } from "./auth/user-button";
 
 export default function Navbar() {
   return (
@@ -20,11 +20,7 @@ export default function Navbar() {
 
         <div className="flex gap-2 md:gap-4 items-center">
           <ThemeToggle />
-          <UserButton
-            appearance={{
-              elements: { avatarBox: { width: "2.5rem", height: "2.5rem" } },
-            }}
-          />
+          <UserButton />
         </div>
       </div>
     </div>
