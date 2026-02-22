@@ -1,54 +1,79 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Loader } from "lucide-react";
+
 import Cards from "@/components/Cards";
 import Refresh from "@/components/Refresh";
-import { useAuth } from "@clerk/nextjs";
-import { Loader } from "lucide-react";
-import useSWR from "swr";
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import { createClient } from "@/lib/supabase/client";
 
 const Inbox = () => {
-  const { userId } = useAuth();
-  const {
-    data: messages,
-    error,
-    isLoading,
-  } = useSWR(userId ? `/api/messages` : null, fetcher, {
-    refreshInterval: 30000,
-  });
+  const supabase = createClient();
+  const router = useRouter();
 
-  if (!userId) return null;
-  if (error) return <div className="text-xl p-2">Failed to load</div>;
-  if (isLoading)
+  const [messages, setMessages] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadMessages = async () => {
+      // Get session
+      const { data } = await supabase.auth.getSession();
+      const user = data.session?.user;
+
+      if (!user) {
+        router.push("/");
+        return;
+      }
+
+      // Fetch messages (RLS handles filtering)
+      const { data: msgs, error } = await supabase
+        .from("messages")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error(error);
+      } else {
+        setMessages(msgs || []);
+      }
+
+      setLoading(false);
+    };
+
+    loadMessages();
+  }, []);
+
+  if (loading)
     return (
       <div className="min-h-32 w-full flex items-center justify-center gap-4 text-4xl">
-        Loading... <Loader size={42} className="animate-spin ease-in-out" />
+        Loading... <Loader size={42} className="animate-spin" />
       </div>
     );
+
   return (
     <>
-      <p className="font-semibold text-lg text-muted-foreground px-1 mont">
-        Ryzz-o-Meter : {messages.length}{" "}
-        <span className="animate-pulse">🔥</span>
+      <p className="font-semibold text-lg text-muted-foreground px-1">
+        Ryzz-o-Meter : {messages.length} 🔥
       </p>
 
       <Refresh />
 
       <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-2 max-w-6xl py-3">
-        {messages.map((message: any) => (
+        {messages.map((message) => (
           <Cards
             key={message.id}
             messageId={message.id}
             seen={message.seen}
             message={message.content}
-            sentAt={new Date(message.createdAt).toLocaleString("en-US", {
+            sentAt={new Date(message.created_at).toLocaleString("en-US", {
               timeZone: "Asia/Kolkata",
             })}
           />
         ))}
+
         {messages.length === 0 && (
-          <div className="text-center col-span-full p-2 mt-16 md:text-lg text-muted-foreground ">
+          <div className="text-center col-span-full p-2 mt-16 text-muted-foreground">
             No Messages found. Share Link above and start getting messages!!
           </div>
         )}
