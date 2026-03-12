@@ -61,7 +61,7 @@ const SendMessages = async ({ params }: any) => {
 
       <Link
         href="/about"
-        title="About Ryzz"
+        title="About Whispr"
         className="absolute bg-purple-700/60 bottom-2 right-1 p-2 rounded-full cursor-pointer"
       >
         <VenetianMask color="white" size={28} />

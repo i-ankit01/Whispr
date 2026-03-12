@@ -54,7 +54,7 @@ const HeroSection = () => {
 
         <div className="md:absolute mt-28 left-4 md:bottom-20 px-6 max-w-sm leading-normal flex flex-col gap-2 md:gap-4 z-10">
           <h2 className="logo ryzz text-5xl md:text-8xl select-none px-1">
-            Ryzz
+            Whispr
           </h2>
           <p className="select-none text-base md:text-xl">
             Create an account and start getting anonymous & secret messages from
@@ -63,6 +63,7 @@ const HeroSection = () => {
           {/* <InstallBtn className="w-fit md:mx-2 mt-1 text-foreground" /> */}
         </div>
         <motion.div
+        
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
