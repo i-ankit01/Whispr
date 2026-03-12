@@ -19,13 +19,7 @@ export default function SignUp() {
   const router = useRouter();
 
   const handleGoogleSignup = async () => {
-    if (!agreedToTerms) {
-      toast.error("Terms required", {
-        description: "Please agree to the terms and conditions to continue.",
-      });
-      return;
-    }
-
+    
     setGoogleLoading(true);
       toast.loading("Redirecting to Google...");
     try {
@@ -58,7 +52,7 @@ export default function SignUp() {
           variant="outline"
           className="w-full h-11 border-gray-300 hover:bg-gray-50"
           onClick={handleGoogleSignup}
-          disabled={googleLoading || loading || !agreedToTerms}
+          disabled={googleLoading || loading }
         >
           {googleLoading ? (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -77,40 +71,10 @@ export default function SignUp() {
         </Button>
 
         {/* Divider */}
-        <div className="relative my-6">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-200" />
-          </div>
-          <div className="relative flex justify-center text-xs">
-            <span className="bg-white px-2 text-gray-500">
-              Agree to terms and conditions first to continue
-            </span>
-          </div>
-        </div>
+        
 
         {/* Email Form */}
-       <div className="flex items-start space-x-2 pt-2">
-            <Checkbox
-              id="terms"
-              checked={agreedToTerms}
-              onCheckedChange={(checked) => setAgreedToTerms(checked as boolean)}
-              className="mt-0.5"
-              disabled={loading || googleLoading}
-            />
-            <Label
-              htmlFor="terms"
-              className="text-xs text-gray-600 leading-relaxed cursor-pointer"
-            >
-              I agree to the{" "}
-              <Link href="/terms" className="text-gray-900 underline hover:no-underline">
-                Terms of Service
-              </Link>{" "}
-              and{" "}
-              <Link href="/privacy" className="text-gray-900 underline hover:no-underline">
-                Privacy Policy
-              </Link>
-            </Label>
-          </div>
+       
       </div>
 
       {/* Trust Indicator */}

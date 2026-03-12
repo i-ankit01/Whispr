@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Copy } from "lucide-react";
 import Wap from "./Wap";
@@ -11,7 +11,12 @@ import { toast } from "sonner";
 import { Button } from "./ui/button";
 
 const Share = ({ userId }: { userId: string }) => {
-  const link = `${window.location.origin}/send/${userId}`;
+  const [link, setLink] = useState("");
+
+  useEffect(() => {
+    setLink(`${window.location.origin}/send/${userId}`);
+  }, [userId]);
+
   const copyLink = () => {
     navigator.clipboard
       .writeText(link)
@@ -26,11 +31,14 @@ const Share = ({ userId }: { userId: string }) => {
       });
   };
 
+  if (!link) return null;
+
   return (
     <>
       <h1 className="text-xl md:text-3xl font-bold mt-3 md:mt-5 mb-3 tracking-tight mont">
         Share your Link
       </h1>
+
       <div className="flex flex-row items-center gap-2 flex-wrap">
         <Link
           href={`/send/${userId}`}
@@ -38,9 +46,11 @@ const Share = ({ userId }: { userId: string }) => {
         >
           {link}
         </Link>
+
         <Button onClick={copyLink}>
           Copy Link <Copy size={16} className="ml-2" />
         </Button>
+
         <Wap linkprop={link} />
         <Insta linkprop={link} />
         <Snap linkprop={link} />

@@ -7,6 +7,9 @@ import { prompts } from "@/lib/data";
 import { toast } from "sonner";
 import { Button } from "./ui/button";
 import { useReward } from "react-rewards";
+import { createClient } from "@/lib/supabase/client";
+
+const supabase = createClient();
 
 interface Props {
   userId: string;
@@ -21,37 +24,41 @@ const Form = ({ userId }: Props) => {
   });
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    if (!message.trim()) {
+      toast.warning("Oopsie😕, the Message is blank...", {
+        description: "Type in something and send again!🔥🤩",
+      });
+      return;
+    }
+
     setLoading(true);
-    reward();
-    const content = message;
+
     try {
-      if (!content) {
-        toast.warning("Oopsie😕,the Message is blank...", {
-          description: "Type in something and send again!🔥🤩",
-        });
-      } else {
-        await fetch("/api/messages", {
-          method: "POST",
-          body: JSON.stringify({ content, userId }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        setMessage("");
-        toast.success("Message is sent successfully 💌 and anonymously!", {
-          description: "Create your account to get your messages!🔥🤩",
-        });
-      }
+      const { error } = await supabase.from("messages").insert({
+        user_id: userId,        // the recipient's userId
+        content: message,       // message content
+        created_at: new Date().toISOString(),
+        seen: false,         // unread by default — adjust if needed
+      });
+
+      if (error) throw error;
+
+      reward();
+      setMessage("");
+      toast.success("Message sent successfully 💌 and anonymously!", {
+        description: "Create your account to get your messages!🔥🤩",
+      });
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error("Failed to send message 😕", {
         description: "Please try again later!🔥🤩",
       });
     } finally {
       setLoading(false);
-      setMessage("");
     }
   };
 
@@ -68,7 +75,7 @@ const Form = ({ userId }: Props) => {
         <Textarea
           placeholder="Show your Ryzz 🤪"
           value={message}
-          className="w-full rounded-b-2xl min-h-[120px] rounded-t-none  bg-zinc-200/50 text-slate-800 border-zinc-400/50 font-semibold text-base focus:ring-inset placeholder:text-zinc-200/85"
+          className="w-full rounded-b-2xl min-h-[120px] rounded-t-none bg-zinc-200/50 text-slate-800 border-zinc-400/50 font-semibold text-base focus:ring-inset placeholder:text-zinc-200/85"
           onChange={(e) => setMessage(e.target.value)}
         />
         <div

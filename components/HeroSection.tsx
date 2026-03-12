@@ -14,10 +14,10 @@ import img1 from "@/app/assets/cartoon1.png";
 import Image from "next/image";
 import Link from "next/link";
 import dynamic from "next/dynamic";
-const InstallBtn = dynamic(() => import("@/components/Installbtn"), {
-  ssr: false,
-  loading: () => <p>Install Now!🔥</p>,
-});
+// const InstallBtn = dynamic(() => import("@/components/Installbtn"), {
+//   ssr: false,
+//   loading: () => <p>Install Now!🔥</p>,
+// });
 import { cn } from "@/lib/utils";
 import { mono } from "@/lib/font";
 import { useReward } from "react-rewards";
@@ -47,7 +47,8 @@ const HeroSection = () => {
           <VelocityScroll
             text="Share your thoughts anonymously"
             default_velocity={4}
-            className="text-center text-4xl font-bold tracking-tight text-white md:text-7xl leading-relaxed"
+            className="text-center text-4xl font-bold tracking-tight 
+  text-foreground md:text-7xl leading-relaxed"
           />
         </div>
 
@@ -59,7 +60,7 @@ const HeroSection = () => {
             Create an account and start getting anonymous & secret messages from
             your friends!!🤩🤪🤫
           </p>
-          <InstallBtn className="w-fit md:mx-2 mt-1 text-foreground" />
+          {/* <InstallBtn className="w-fit md:mx-2 mt-1 text-foreground" /> */}
         </div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

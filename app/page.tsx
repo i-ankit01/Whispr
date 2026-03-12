@@ -13,27 +13,25 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { createClient } from "@/lib/supabase/server";
 
 export default async function Home() {
-
   const supabase = await createClient();
-    const { data : {user}, error } = await supabase.auth.getUser();
-  
-    if (error || !user) redirect("/");
-    const userId = user.id;
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-    if(userId) redirect('/dashboard');
+  if (user) {
+    redirect("/dashboard");
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-purple-50 dark:from-purple-950 to-background">
       <header className="sticky top-0 w-full z-50 bg-background/70 backdrop-blur-xl rounded-b-3xl">
         <nav className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="text-3xl px-1 logo font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-violet-600">
-            Ryzz
+            Whispr
           </div>
           <div className="flex items-center gap-4">
             <ThemeToggle />
-            <Button
-              className="bg-transparent hover:text-accent-foreground text-foreground"
-            >
+            <Button className="bg-transparent hover:text-accent-foreground text-foreground">
               <Link href={"/about"}>About</Link>
             </Button>
             <Button asChild>
@@ -128,23 +126,35 @@ export default async function Home() {
           {/* CTA Section */}
           <section className="text-center px-2">
             <div className="max-w-3xl mx-auto space-y-8">
-              <Card className="md:p-12 py-10 px-6 bg-gradient-to-br from-accent to-accent/70 rounded-3xl box-glow">
+              <Card
+                className="md:p-12 py-10 px-6 rounded-3xl box-glow 
+    bg-gradient-to-br from-accent to-accent/70 
+    dark:from-accent/40 dark:to-accent/20"
+              >
                 <div className="space-y-6">
                   <MessageSquare className="size-12 mx-auto text-primary" />
-                  <h2 className="text-3xl md:text-4xl font-bold text-black tracking-tight">
+
+                  <h2
+                    className="text-3xl md:text-4xl font-bold tracking-tight 
+        text-foreground"
+                  >
                     Ready to start messaging?
                   </h2>
-                  <p className="text-lg text-black/80 max-w-md mx-auto">
+
+                  <p className="text-lg max-w-md mx-auto text-muted-foreground">
                     Join Ryzz today and start getting anonymous messages from
                     your friends and family.
                   </p>
+
                   <Button
                     size="lg"
-                    variant={"outline"}
-                    className="text-lg bg-accent-foreground text-accent"
+                    variant="outline"
+                    className="text-lg 
+          bg-background text-foreground 
+          hover:bg-accent hover:text-accent-foreground"
                     asChild
                   >
-                    <Link href={"/sign-up"}>
+                    <Link href="/sign-up">
                       Let&apos;s Go!
                       <ArrowRight className="ml-2" size={30} />
                     </Link>
@@ -158,7 +168,7 @@ export default async function Home() {
 
       <footer className="border-t rounded-t-3xl">
         <div className="max-w-7xl mx-auto px-4 py-6 text-center text-sm text-muted-foreground">
-          © 2024 Ryzz. All rights reserved.
+          © 2026 Whispr. All rights reserved.
         </div>
       </footer>
     </div>
