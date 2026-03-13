@@ -79,7 +79,7 @@ export default function SignUp() {
 
       {/* Trust Indicator */}
       <p className="text-center text-xs text-gray-500 mt-4">
-        Where creators and brands collaborate with confidence
+        Truly Anonymous
       </p>
     </div>
   );

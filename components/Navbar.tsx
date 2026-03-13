@@ -13,7 +13,7 @@ export default function Navbar() {
             className="flex items-center justify-center gap-2"
           >
             <h1 className="text-4xl p-2 font-bold  bg-clip-text text-transparent bg-gradient-to-tl from-violet-600 via-purple-700 to-fuchsia-400 logo">
-              Ryzz
+              Whispr
             </h1>
           </Link>
         </div>
