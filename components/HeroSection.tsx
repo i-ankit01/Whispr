@@ -32,7 +32,7 @@ const HeroSection = () => {
 
   return (
     <>
-      <section className="relative flex items-center flex-col bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-cyan-400 via-blue-500 to-purple-600 rounded-3xl min-h-[700px] md:min-h-[770px] overflow-hidden text-white">
+      <section className="relative flex min-h-[620px] flex-col items-center overflow-hidden rounded-3xl bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-cyan-400 via-blue-500 to-purple-600 text-foreground dark:text-white md:min-h-[770px]">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,#f0f0f01a_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f01b_1px,transparent_1px)] bg-[size:6rem_4rem] [mask-image:radial-gradient(ellipse_50%_50%_at_50%_50%,#000_70%,transparent_100%)]"></div>
 
         <Sparkle
@@ -43,20 +43,19 @@ const HeroSection = () => {
           className="size-16 fill-accent text-accent hidden md:block absolute bottom-16 right-20 animate-shake"
           strokeWidth={"1px"}
         />
-        <div className="md:h-28 bg-slate-200/20 w-full absolute top-0">
+        <div className="absolute top-0 w-full bg-slate-200/20 md:h-28">
           <VelocityScroll
             text="Share your thoughts anonymously"
             default_velocity={4}
-            className="text-center text-4xl font-bold tracking-tight 
-  text-foreground md:text-7xl leading-relaxed"
+            className="text-center text-2xl font-bold tracking-tight text-foreground dark:text-white sm:text-4xl md:text-7xl md:leading-relaxed"
           />
         </div>
 
-        <div className="md:absolute mt-28 left-4 md:bottom-20 px-6 max-w-sm leading-normal flex flex-col gap-2 md:gap-4 z-10">
-          <h2 className="logo ryzz text-5xl md:text-8xl select-none px-1">
+        <div className="z-10 mt-32 flex max-w-sm flex-col gap-3 px-5 leading-normal md:absolute md:left-4 md:bottom-20 md:mt-28 md:gap-4 md:px-6">
+          <h2 className="logo ryzz select-none px-1 text-4xl text-foreground sm:text-5xl md:text-8xl dark:text-white">
             Whispr
           </h2>
-          <p className="select-none text-base md:text-xl">
+          <p className="select-none text-sm text-foreground/90 sm:text-base md:text-xl dark:text-white/90">
             Create an account and start getting anonymous & secret messages from
             your friends!!🤩🤪🤫
           </p>
@@ -67,7 +66,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="absolute bottom-0"
+          className="absolute bottom-0 left-1/2 w-full -translate-x-1/2"
         >
           <Image
             src={img1}
@@ -77,52 +76,52 @@ const HeroSection = () => {
             loading="eager"
             quality={85}
             height={800}
-            className="w-full max-w-[720px] mx-auto img-drop-shadow select-none pointer-events-none"
+            className="mx-auto w-full max-w-[520px] select-none pointer-events-none md:max-w-[720px] img-drop-shadow"
           />
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="absolute bottom-4 w-full text-center"
+          className="absolute bottom-4 z-20 w-full px-4 text-center md:bottom-4"
         >
           <Link href={"/sign-up"}>
             <Button
               disabled={isAnimating}
               onClick={reward}
               size="lg"
-              className="text-lg md:text-xl bg-accent text-accent-foreground hover:bg-accent/90 -rotate-3 scale-125 duration-500 pl-20 pr-10 hover:pr-20 hover:pl-10 rounded-full active:rotate-0 py-4 md:py-8 group"
+              className="group -rotate-2 rounded-full bg-accent px-8 py-4 text-base text-accent-foreground transition-all duration-500 hover:bg-accent/90 hover:px-10 sm:px-12 sm:text-lg md:-rotate-3 md:scale-125 md:px-20 md:py-8 md:text-xl md:hover:px-20"
             >
               {" "}
               <span id="rewardId" />
               Start Now
-              <div className="bg-accent-foreground p-3 md:p-5 rounded-full absolute left-1 group-hover:translate-x-36 transition-all duration-500">
-                <ArrowRight color="white" size={40} className="size-8" />
+              <div className="absolute left-1 rounded-full bg-accent-foreground p-2 transition-all duration-500 group-hover:translate-x-24 sm:p-3 md:p-5 md:group-hover:translate-x-36">
+                <ArrowRight color="white" size={40} className="size-6 md:size-8" />
               </div>
             </Button>
           </Link>
         </motion.div>
-        <div className="hidden md:grid grid-cols-2 gap-4 border border-slate-200/15 rounded-3xl p-2 absolute top-32 gap-y-2 right-12">
-          <div className="bg-accent aspect-square rounded-full size-11 flex items-center justify-center cursor-pointer hover:brightness-110 hover:scale-105 duration-300">
+        <div className="absolute right-12 top-32 hidden grid-cols-2 gap-4 gap-y-2 rounded-3xl border border-black/20 bg-background/60 p-2 shadow-lg shadow-black/10 backdrop-blur-md md:grid dark:border-slate-200/15 dark:bg-white/5 dark:shadow-black/20">
+          <div className="flex aspect-square size-11 cursor-pointer items-center justify-center rounded-full bg-accent duration-300 hover:scale-105 hover:brightness-110">
             <p className="logo text-3xl pt-1 text-accent-foreground">R</p>
           </div>
-          <div className="bg-slate-200/15 aspect-square rounded-full size-11 flex items-center justify-center cursor-pointer hover:brightness-110 hover:scale-105 duration-300">
-            <FacebookIcon color="white" />
+          <div className="flex aspect-square size-11 cursor-pointer items-center justify-center rounded-full bg-foreground/10 text-foreground duration-300 hover:scale-105 hover:brightness-110 dark:bg-slate-200/15 dark:text-white">
+            <FacebookIcon className="size-5" />
           </div>
-          <div className="bg-slate-200/15 aspect-square rounded-full size-11 flex items-center justify-center cursor-pointer hover:brightness-110 hover:scale-105 duration-300">
-            <InstagramIcon color="white" />
+          <div className="flex aspect-square size-11 cursor-pointer items-center justify-center rounded-full bg-foreground/10 text-foreground duration-300 hover:scale-105 hover:brightness-110 dark:bg-slate-200/15 dark:text-white">
+            <InstagramIcon className="size-5" />
           </div>
-          <div className="bg-slate-200/15 aspect-square rounded-full size-11 flex items-center justify-center cursor-pointer hover:brightness-110 hover:scale-105 duration-300">
-            <Twitter color="white" />
+          <div className="flex aspect-square size-11 cursor-pointer items-center justify-center rounded-full bg-foreground/10 text-foreground duration-300 hover:scale-105 hover:brightness-110 dark:bg-slate-200/15 dark:text-white">
+            <Twitter className="size-5" />
           </div>
         </div>
-        <div className="absolute top-1/2 right-12 hidden md:flex flex-col gap-4 text-end">
+        <div className="absolute right-12 top-1/2 hidden flex-col gap-4 text-end md:flex">
           <div>
-            <h3 className={cn(mono.className, "text-4xl font-bold")}>100+</h3>
+            <h3 className={cn(mono.className, "text-3xl font-bold lg:text-4xl")}>100+</h3>
             <p>Users</p>
           </div>
           <div>
-            <h3 className={cn(mono.className, "text-4xl font-bold")}>2300+</h3>
+            <h3 className={cn(mono.className, "text-3xl font-bold lg:text-4xl")}>2300+</h3>
             <p>Messages</p>
           </div>
         </div>
